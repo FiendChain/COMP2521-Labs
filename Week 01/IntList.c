@@ -38,7 +38,13 @@ IntList newIntList()
 // free up all space associated with list
 void freeIntList(IntList L)
 {
-	// does nothing ...
+	struct IntListNode *curr = L->first;
+	while(curr != NULL)
+	{
+		struct IntListNode *prev = curr;
+		curr = curr->next;
+		free(prev);
+	}
 }
 
 // display list as one integer per line on stdout
@@ -56,7 +62,9 @@ IntList getIntList(FILE *inf)
 
 	L = newIntList();
 	while (fscanf(inf,"%d",&v) != EOF)
+	{
 		IntListInsert(L,v);
+	}
 	return L;
 }
 
@@ -65,7 +73,6 @@ IntList getIntList(FILE *inf)
 static struct IntListNode *newIntListNode(int v)
 {
 	struct IntListNode *n;
-
 	n = malloc(sizeof (struct IntListNode));
 	assert(n != NULL);
 	n->data = v;
@@ -92,8 +99,43 @@ void IntListInsert(IntList L, int v)
 // insert an integer into correct place in a sorted list
 void IntListInsertInOrder(IntList L, int v)
 {
-	// This is INCORRECT
-	IntListInsert(L, v);
+	assert(L != NULL);	// check if valid list
+	if(!IntListIsSorted(L)) return;
+	struct IntListNode *curr = L->first;			
+	struct IntListNode *new = newIntListNode(v);
+	(L->size)++;
+	if(curr == NULL)	// if empty list
+	{
+		L->first = new;
+		L->last = new;
+		new->next = NULL;
+		return;
+	}
+	if(curr->data >= v) // insert at front if new is going to be new head
+	{
+		L->first = new;
+		new->next = curr;
+		return;
+	}
+	while(curr->next != NULL)	// otherwise go through list	
+	{
+		if(curr->next->data >= v)	// check if curr <= next <= curr->next
+		{
+			new->next = curr->next;
+			curr->next = new;
+			break;
+		}
+		curr = curr->next;
+	}
+	if(curr->next == NULL)		// if end of list, append
+	{
+		curr->next = new;
+		new->next = NULL;
+	}
+	if(new->next == NULL)		// check if new tail 
+	{
+		L->last = new;
+	}
 }
 
 // delete first occurrence of v from a list
