@@ -100,7 +100,7 @@ class SortingTest:
 
 def main():
     ST = SortingTest
-    headers = ["Input Size", "Initial Order", "Has Duplicates", "Total Runs"]
+    headers = ["Input Size", "Initial Order", "Has Duplicates", "Number of runs"]
     config = [
     #   Total   Order       Copies  Runs    
         [5000,  ST.RANDOM,  False,  10],
