@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import sys
-import os
 import time
 from copy import copy
 
@@ -75,14 +74,12 @@ def generate_config(headers, data):
 
 
 # create a html table
-def generate_table(config_list, results, headers):
+def generate_table(config_list, results, headers, programs):
     # combine results and config data
     table_data = []
     for config_entry, result in zip(config_list, results):
         config_entry.update(result)
         table_data.append(config_entry)
-    # get program list
-    programs = [program for program in results[0]]
     # write head
     table = open("results.html", mode="w")
     table.write("<html><body><table border=1>")
@@ -168,7 +165,7 @@ def main():
             "format": lambda value: "{:.03f}".format(value),
         }
     ]
-    generate_table(config_list, results, headers)
+    generate_table(config_list, results, headers, programs)
     
 
 if __name__ == "__main__":
