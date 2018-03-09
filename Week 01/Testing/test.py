@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import sys
+import os
 import time
 from copy import copy
 
@@ -16,7 +17,7 @@ SORTED = {"type": "Sorted", "cmd": "{program} {total} > {location}"}
 REVERSE= {"type": "Reverse","cmd": "{program} {total} | sort -nr > {location}"}
 
 # cmd string for testing
-CMD_STRING = "{program} < {location} > {output}"
+CMD_STRING = "{program} -n < {location} > {output}"
 
 # default list options
 DEFAULT_CONFIG = {
