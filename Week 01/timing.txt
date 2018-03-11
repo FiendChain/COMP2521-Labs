@@ -1,14 +1,40 @@
+// Lab02
+// William Yang & Amy Luo 
 Input	Initial	Has	Number	AvgTime	AvgTime
 Size	Order	Dups	of runs	forusel	forsort
-5000	random	no	N	T1sec	T2sec
-5000	sorted	no	N	T1sec	T2sec
-5000	reverse	no	N	T1sec	T2sec
-5000	random	yes	N	T1sec	T2sec
-5000	sorted	yes	N	T1sec	T2sec
-5000	reverse	yes	N	T1sec	T2sec
-10000	random	no	N	T1sec	T2sec
-10000	sorted	no	N	T1sec	T2sec
-10000	reverse	no	N	T1sec	T2sec
-10000	random	yes	N	T1sec	T2sec
-10000	sorted	yes	N	T1sec	T2sec
-10000	reverse	yes	N	T1sec	T2sec
+5000	Random	False	10	0.029	0.004
+5000	Sorted	False	10	0.047	0.003
+5000	Reverse	False	10	0.003	0.003
+5000	Random	True	10	0.028	0.004
+5000	Sorted	True	10	0.029	0.004
+5000	Reverse	True	10	0.003	0.003
+10000	Random	False	10	0.116	0.007
+10000	Sorted	False	10	0.173	0.004
+10000	Reverse	False	10	0.005	0.004
+10000	Random	True	10	0.116	0.007
+10000	Sorted	True	10	0.117	0.007
+10000	Reverse	True	10	0.005	0.005
+
+//some brief comments explaining the results
+//short paragraph to explain any patterns that you notice in the timing results
+//Don't just re-state the timing result in words; try to explain why they happened
+//give a summary of your results after collecting and averaging 5 data points (5 input sizes, 3 repeats per data point). For the summary, try and talk about what the best and worst case scenarios are and why that?s so. Also let me know how duplicates affect the data
+
+Comparing usel and sort in general:
+sort is defintely faster in sorting lists disregarding input sizes. However, as the input size increase, the difference between time taken for usel and sort became larger (usel has a much great growth rate as input sizes incrase). The algorithm in usel is based on Insertion Sort on a linked list which is considered a slow sorting algorithm where it has a worst case complexity of O(n^2). On the other hand, the sorting algorithm on linux employs the merge sort algorithm with a worst case complexity of O(nlog(n)).
+
+In usel:
+	Best case:  (i.e. input sorted in reverse order) 10, 9, 8, 7, 6, 5, 4, 3, 2, 1;
+        it only compares the element with the first number, hence O(1); 
+        hence the element inserted will always be at first. 
+    
+    viceversa;;
+	Worst case:  (i.e. already sorted input) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
+
+
+	Input order:
+	In terms of how input order affects the sortings, except for the input size of 5000 which produced a different pattern, when the input list is in a random order, the program takes the longest to sort. As random means there are more combination and diversity for the program to compare and position. Bestcase is mentioned as above, when it's inserted in a reverse maner, as it only need to compare one element.A sorted list input is slower than a reversed list input since despite already being sorted, the program has to undergo insertion sort on the sorted list where each insert, the program has to reach the end of the already sorted list to append it.
+
+	Duplicates:
+    there is no obvious differences when it's duplicate or not, i believe the alogrithm still treats element the same sorting manner.
+

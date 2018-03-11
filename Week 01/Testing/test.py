@@ -103,18 +103,18 @@ def main():
     headers = ["Input Size", "Initial Order", "Has Duplicates", "Number of runs"]
     config = [
     #   Total   Order       Copies  Runs    
-        [5000,  ST.RANDOM,  False,  10],
-        [5000,  ST.SORTED,  False,  10],
-        [5000,  ST.REVERSE, False,  10],
-        [5000,  ST.RANDOM,  True,   10],
-        [5000,  ST.SORTED,  True,   10],
-        [5000,  ST.REVERSE, True,   10],
-        [10000, ST.RANDOM,  False,  10],
-        [10000, ST.SORTED,  False,  10],
-        [10000, ST.REVERSE, False,  10],
-        [10000, ST.RANDOM,  True,   10],
-        [10000, ST.SORTED,  True,   10],
-        [10000, ST.REVERSE, True,   10],
+        [5000,  ST.RANDOM,  False,  30],
+        [5000,  ST.SORTED,  False,  30],
+        [5000,  ST.REVERSE, False,  30],
+        [5000,  ST.RANDOM,  True,   30],
+        [5000,  ST.SORTED,  True,   30],
+        [5000,  ST.REVERSE, True,   30],
+        [10000, ST.RANDOM,  False,  30],
+        [10000, ST.SORTED,  False,  30],
+        [10000, ST.REVERSE, False,  30],
+        [10000, ST.RANDOM,  True,   30],
+        [10000, ST.SORTED,  True,   30],
+        [10000, ST.REVERSE, True,   30],
     ]
     programs = ["./usel", "sort"]
     SortingTest.start_tests(headers, config, programs)
