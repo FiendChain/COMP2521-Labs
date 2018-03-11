@@ -99,40 +99,51 @@ void IntListInsert(IntList L, int v)
 // insert an integer into correct place in a sorted list
 void IntListInsertInOrder(IntList L, int v)
 {
-	assert(L != NULL);	// check if valid list
+	// check if valid list
+	assert(L != NULL);	
 	if(!IntListIsSorted(L)) return;
+	// get current and new pointers
 	struct IntListNode *curr = L->first;			
 	struct IntListNode *new = newIntListNode(v);
 	(L->size)++;
-	if(curr == NULL)	// if empty list
+	// if empty list
+	if(curr == NULL)	
 	{
 		L->first = new;
 		L->last = new;
 		new->next = NULL;
 		return;
 	}
-	if(curr->data >= v) // insert at front if new is going to be new head
+	// insert at front if new is going to be new head
+	if(curr->data >= v) 
 	{
 		L->first = new;
 		new->next = curr;
+		if(curr->next == NULL)		// if only two items, then curr will become last node
+		{
+			L->last = curr;
+		}
 		return;
 	}
-	while(curr->next != NULL)	// otherwise go through list	
+	// otherwise go through list, until it reaches the end	
+	while(curr->next != NULL)	
 	{
-		if(curr->next->data >= v)	// check if curr <= next <= curr->next
+		if(curr->next->data >= v)	// check if curr <= new <= curr->next
 		{
-			new->next = curr->next;
+			new->next = curr->next;	// insert between and exit
 			curr->next = new;
 			break;
 		}
 		curr = curr->next;
 	}
-	if(curr->next == NULL)		// if end of list, append
+	// if end of list reached, append
+	if(curr->next == NULL)			
 	{
 		curr->next = new;
 		new->next = NULL;
 	}
-	if(new->next == NULL)		// check if new tail 
+	// check if new is the tail now 
+	if(new->next == NULL)		
 	{
 		L->last = new;
 	}
