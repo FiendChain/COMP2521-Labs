@@ -324,9 +324,7 @@ void debugList(FILE *fp, DLList L)
 	assert(validDLList(L));
 	DLListNode *curr = L->first;
 	while(curr != NULL) {
-		if(curr == L->first) fprintf(fp, "first: ");
-		if(curr == L->curr)  fprintf(fp, "curr: ");
-		if(curr == L->last)	 fprintf(fp, "last: ");
+		if(curr == L->curr)  fprintf(fp, "*");
 		fprintf(fp, "%s\n", curr->value);
 		curr = curr->next;
 	}

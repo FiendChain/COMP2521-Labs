@@ -1,6 +1,6 @@
 #!/bin/bash
 cd ../
 make 
-cd Testing/ 
+cd Testing\ testL/
 ./testL > OUTPUT
 echo "Finished testing"
