@@ -8,30 +8,13 @@
 #include <assert.h>
 #include "DLList.h"
 
-// data structures representing DLList
-
-typedef struct DLListNode {
-	char   *value;  // value of this list item (string)
-	struct DLListNode *prev;
-	               // pointer previous node in list
-	struct DLListNode *next;
-	               // pointer to next node in list
-} DLListNode;
-
-typedef struct DLListRep {
-	int  nitems;      // count of items in list
-	DLListNode *first; // first node in list
-	DLListNode *curr;  // current node in list
-	DLListNode *last;  // last node in list
-} DLListRep;
-
 // function prototypes
 // free a node
 void freeDLListNode(DLListNode *);
 
 // create a new DLListNode (private function)
 static DLListNode *newDLListNode(char *it)
-{
+{ 
 	DLListNode *new;
 	new = malloc(sizeof(DLListNode));
 	assert(new != NULL);
@@ -253,7 +236,7 @@ void DLListAfter(DLList L, char *it)
 		return;
 	}
 	// not empty
-	if(curr->next != NULL)
+	if(curr->next != NULL)	// if there is more than one item, link ahead to new
 		curr->next->prev = new;
 	new->next = curr->next;
 	new->prev = curr;
@@ -270,8 +253,8 @@ void DLListAfter(DLList L, char *it)
 // if current was only item, current becomes null
 void DLListDelete(DLList L)
 {
-	assert (L != NULL);
-	if(L->nitems == 0) return;
+	assert(L != NULL);
+	if(L->nitems == 0 || L->curr == NULL) return;
 	// COMPLETE THIS FUNCTION
 	DLListNode *curr = L->curr;
 	L->nitems--;
@@ -316,102 +299,6 @@ void freeDLListNode(DLListNode *node)
 	if(node == NULL) return;
 	free(node->value);
 	free(node);
-}
-
-// TESTING
-void debugList(FILE *fp, DLList L)
-{
-	assert(validDLList(L));
-	DLListNode *curr = L->first;
-	while(curr != NULL) {
-		if(curr == L->curr)  fprintf(fp, "*");
-		fprintf(fp, "%s\n", curr->value);
-		curr = curr->next;
-	}
-}
-
-// cycle to appropriate index
-void cycleDLList(DLList L, int index)
-{
-	DLListNode *curr = L->first;
-	for(int i = 0; i < L->nitems && curr != NULL; i++)
-	{
-		if(index == i || curr->next == NULL) {
-			L->curr = curr;
-			return;
-		}
-		curr = curr->next;
-	}
-}
-
-int test_DLListBefore(DLList L, char *it)
-{
-	int returnValue = 1;
-	DLListNode *oldcurr = L->curr;
-	int oldSize = L->nitems; 
-	DLListBefore(L, it);
-	assert(validDLList(L));
-	if(strcmp(L->curr->value, it) == 0) {
-		if(L->curr->next != oldcurr) {
-			fprintf(stderr, "Error: DLListBefore() failed to have oldcurr after new curr\n");
-			returnValue = 0;
-		}
-		if(L->nitems != oldSize+1) {
-			fprintf(stderr, "Error: DLListBefore() did not increment list size!\n");
-			returnValue = 0;
-		}
-	} else {
-		fprintf(stderr, "Error: DLListBefore() failed to insert value to current\n");
-		returnValue = 0;
-	}
-	return returnValue;
-}
-
-int test_DLListAfter(DLList L, char *it)
-{
-	int returnValue = 1;
-	DLListNode *oldcurr = L->curr;
-	int oldSize = L->nitems; 
-	DLListAfter(L, it);
-	assert(validDLList(L));
-	if(strcmp(L->curr->value, it) == 0) {
-		if(L->curr->prev != oldcurr) {
-			fprintf(stderr, "Error: DLListAfter() failed to have oldcurr before new curr\n");
-			returnValue = 0;
-		}
-		if(L->nitems != oldSize+1) {
-			fprintf(stderr, "Error: DLListAfter() did not increment list size!\n");
-			returnValue = 0;
-		}
-	} else {
-		fprintf(stderr, "Error: DLListAfter() failed to insert value to current\n");
-		returnValue = 0;
-	}
-	return returnValue;
-}
-
-int test_DLLDelete(DLList L)
-{
-	int returnValue = 1;
-	// predict expected new list
-	int expectedSize = L->nitems-1;
-	DLListNode *expectedCurr = NULL;
-	if(L->curr->next != NULL)
-		expectedCurr = L->curr->next;
-	else
-		expectedCurr = L->curr->prev;
-	DLListDelete(L);
-	assert(validDLList(L));
-	if(L->curr != expectedCurr) {
-		fprintf(stderr, "Error: DLLDelete() did not change current to expected node\n");
-		returnValue = 0;
-	}
-	if(L->nitems != expectedSize) {
-		fprintf(stderr, "Error: DLLDelete() did not decrement size of list\n");
-		returnValue = 0;
-	}
-
-	return returnValue;
 }
 
 

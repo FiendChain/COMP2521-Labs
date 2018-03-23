@@ -6,14 +6,14 @@ BINS=testL myed
 
 all: $(BINS)
 
-testL : testList.o DLList.o
-	$(CC) -o testL testList.o DLList.o
+testL : testList.o DLList.o test_DLList.o
+	$(CC) -o testL testList.o DLList.o test_DLList.o
 
 myed : myed.o DLList.o
 	$(CC) -o myed myed.o DLList.o
 
 DLList.o : DLList.c DLList.h
-
+test_DLList.o: test_DLList.c test_DLList.h
 myed.o : myed.c DLList.h
 
 testList.o : testList.c DLList.h

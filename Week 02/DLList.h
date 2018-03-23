@@ -11,8 +11,23 @@
 // External view of DLList
 // Implementation given in DLList.c
 // Implements a DLList of strings (i.e. items are strings)
-
 typedef struct DLListRep *DLList;
+
+// data structures representing DLList
+typedef struct DLListNode {
+	char   *value;  // value of this list item (string)
+	struct DLListNode *prev;
+	               // pointer previous node in list
+	struct DLListNode *next;
+	               // pointer to next node in list
+} DLListNode;
+
+typedef struct DLListRep {
+	int  nitems;      // count of items in list
+	DLListNode *first; // first node in list
+	DLListNode *curr;  // current node in list
+	DLListNode *last;  // last node in list
+} DLListRep;
 
 // create a new empty DLList
 DLList newDLList();
@@ -61,12 +76,5 @@ int DLListLength(DLList);
 
 // is the list empty?
 int DLListIsEmpty(DLList);
-
-// TESTING
-void debugList(FILE *, DLList);
-void cycleDLList(DLList, int);
-int test_DLListBefore(DLList, char *);
-int test_DLListAfter(DLList, char *);
-int test_DLLDelete(DLList);
 
 #endif
